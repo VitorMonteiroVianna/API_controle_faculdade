@@ -1,8 +1,15 @@
 from django.contrib import admin
-from django.urls import path
-from faculdade.views import alunos
+from django.urls import path, include
+from rest_framework import routers
+
+from faculdade import views
+
+
+router = routers.DefaultRouter()
+router.register(r'alunos', views.AlunoViewSet)
+router.register(r'cursos', views.CursoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('alunos/', alunos)
+    path('', include(router.urls))    
 ]
