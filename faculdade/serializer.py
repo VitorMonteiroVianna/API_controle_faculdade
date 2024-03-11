@@ -1,11 +1,23 @@
 from rest_framework import serializers
 from faculdade.models import Aluno, Curso, Matricula
+from faculdade.validators import *
+
 
 
 class AlunoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aluno
         fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento']
+
+    def validate(self, data):
+        validacao_cpf = cpf_valido(data['cpf'])
+        if not validacao_cpf['qnt_nums']:
+            raise serializers.ValidationError({"cpf": "O cpf deve conter exatamente 11 digitos"})
+        if not validacao_cpf['only_nums']:
+            raise serializers.ValidationError({"cpf": "O cpf deve conter somente numeros"})
+        if not rg_valido(data['rg']):
+            raise serializers.ValidationError({"rg": "O rg deve conter exatamente 9 digitos"})
+        return data
 
 
 class CursoSerializer(serializers.ModelSerializer):
