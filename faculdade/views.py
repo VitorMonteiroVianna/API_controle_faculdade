@@ -1,4 +1,4 @@
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, filters
 from rest_framework.permissions import AllowAny
 from faculdade.models import Aluno, Curso, Matricula
 from faculdade.serializer import AlunoSerializer, CursoSerializer, MatriculaSerializer, MatriculasPorAlunoSerializer, AlunosPorCursoSerializer
@@ -14,6 +14,8 @@ class AlunoViewSet(viewsets.ModelViewSet):
     serializer_class = AlunoSerializer
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['nome', 'cpf', 'rg']
 
 
 class CursoViewSet(viewsets.ModelViewSet):
@@ -24,6 +26,8 @@ class CursoViewSet(viewsets.ModelViewSet):
     serializer_class = CursoSerializer
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['codigo', 'descricao', 'nivel']
 
 
 class MatriculaViewSet(viewsets.ModelViewSet):
