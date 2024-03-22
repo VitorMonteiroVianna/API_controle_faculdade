@@ -21,7 +21,6 @@ def criando_pessoas(quantidade_de_pessoas):
         cpf = cpf.generate()
         rg = "{}{}{}{}".format(random.randrange(10, 99),random.randrange(100, 999),random.randrange(100, 999),random.randrange(0, 9) ) 
 
-
         
         p = Aluno(nome = nome, cpf = cpf, rg = rg, data_nascimento = data)
         p.save()
